@@ -24,7 +24,7 @@ import { APP_PIPE } from "@nestjs/core";
     },
   ],
   imports: [
-    /* TypeOrmModule.forRoot(databaseConfig), */
+    TypeOrmModule.forRoot(databaseConfig),
     MulterModule.register(multerConfig),
     AuthenticationModule,
   ],
