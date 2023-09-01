@@ -1,0 +1,14 @@
+{
+  "en": {
+    "INTERNAL_SERVER_ERROR": "Internal Server Error",
+    "SOMETHING_WENT_WRONG": "Something went wrong",
+    "SUCCESS": "Success",
+    "ERROR": "Error",
+    "AUTH_TOKEN_REQUIRED": "Auth Token Required",
+    "TOKEN_MALFORMED": "Token malformed",
+    "TOKEN_EXPIRED": "Token Expired",
+    "REFRESH_TOKEN_REQUIRED": "Refresh Token Required",
+    "REFRESH_MALFORMED": "Refresh Token malformed",
+    "REFRESH_EXPIRED": "Refresh Token Expired"
+  }
+}
