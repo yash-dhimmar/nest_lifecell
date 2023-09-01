@@ -29,7 +29,6 @@ import { APP_PIPE } from "@nestjs/core";
     AuthenticationModule,
   ],
 })
-
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes("*");
