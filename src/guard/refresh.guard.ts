@@ -26,7 +26,11 @@ export class RefreshGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: "secretKey",
       });
-      if (payload) request.body.user_id = payload.user_id;
+      console.log("========", payload)
+      if (payload) {
+        request.body.user_id = payload.user_id;
+        request.is_admin = payload.is_admin;
+      }
       else throw new UnauthorizedException("REFRESH_MALFORMED");
       request["user"] = payload;
     } catch {

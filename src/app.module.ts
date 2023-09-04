@@ -12,6 +12,7 @@ import { multerConfig } from "./config/multer.config";
 import { MulterModule } from "@nestjs/platform-express";
 import { LoggerMiddleware } from "./middlewares/logger.middleware";
 import { APP_PIPE } from "@nestjs/core";
+import { AdminModule } from "./app/admin/admin.module";
 
 @Module({
   controllers: [],
@@ -27,6 +28,7 @@ import { APP_PIPE } from "@nestjs/core";
     TypeOrmModule.forRoot(databaseConfig),
     MulterModule.register(multerConfig),
     AuthenticationModule,
+    AdminModule
   ],
 })
 
