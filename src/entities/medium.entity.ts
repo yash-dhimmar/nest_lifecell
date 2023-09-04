@@ -14,7 +14,7 @@ export class Medium {
   id: number;
 
   @Column()
-  Medium_name: string;
+  medium_name: string;
 
   @CreateDateColumn({ type: "timestamp" })
   created_at: Date;

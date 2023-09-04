@@ -9,6 +9,13 @@
     "TOKEN_EXPIRED": "Token Expired",
     "REFRESH_TOKEN_REQUIRED": "Refresh Token Required",
     "REFRESH_MALFORMED": "Refresh Token malformed",
-    "REFRESH_EXPIRED": "Refresh Token Expired"
+    "REFRESH_EXPIRED": "Refresh Token Expired",
+    "LIST": "List successfully",
+    "CREATE": "created successfully",
+    "NAME_EXIT": "Name Is Already Exit",
+    "UPDATE": "Updated successfully",
+    "ID_NOT_FOUND": "Details Not Found",
+    "GET_BY_ID": "Details Found",
+    "DELETE": "Deleted successfully "
   }
 }
