@@ -10,7 +10,7 @@ dotenv.config();
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService) { }
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     let token = request.headers.authorization;
@@ -25,7 +25,10 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: "secretKey",
       });
-      if (payload) request.body.user_id = payload.user_id;
+      if (payload) {
+        request.body.user_id = payload.user_id;
+        request.is_admin = payload.is_admin;
+      }
       else throw new UnauthorizedException("TOKEN_MALFORMED");
       request["user"] = payload;
     } catch {
