@@ -14,6 +14,7 @@ import { LoggerMiddleware } from "./middlewares/logger.middleware";
 import { APP_PIPE } from "@nestjs/core";
 import { AdminModule } from "./app/admin/admin.module";
 import { SourceMediumModule } from "./app/source/source.module";
+import { RolePermissionModule } from "./app/rolePermission/rolePermission.module";
 
 @Module({
   controllers: [],
@@ -30,7 +31,8 @@ import { SourceMediumModule } from "./app/source/source.module";
     MulterModule.register(multerConfig),
     AuthenticationModule,
     AdminModule,
-    SourceMediumModule
+    SourceMediumModule,
+    RolePermissionModule
   ],
 })
 
