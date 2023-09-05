@@ -25,7 +25,7 @@ export class Role {
 
   @OneToMany(
     () => UserRolePermission,
-    (userRolePermission) => userRolePermission.role_id,
+    (userRolePermission) => userRolePermission.roleDetail,
     {
       onDelete: "CASCADE",
       onUpdate: "CASCADE",

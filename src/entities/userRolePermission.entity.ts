@@ -14,23 +14,19 @@ export class UserRolePermission {
   @PrimaryGeneratedColumn()
   id: number;
 
-  //   @Column()
-  //   role_id: number;
   @ManyToOne(() => Role, (role) => role.rolePermission, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
   })
   @JoinColumn({ name: "role_id" })
-  role_id: Role;
+  roleDetail: Role;
 
-  // @Column()
-  // permission_id: number;
   @ManyToOne(() => Permission, (permission) => permission.permission, {
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
   })
   @JoinColumn({ name: "permission_id" })
-  permission_id: Permission;
+  permissionDetail: Permission;
 
   @CreateDateColumn({ type: "timestamp" })
   created_at: Date;
