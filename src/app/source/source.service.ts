@@ -15,9 +15,7 @@ export class SourceService {
 
   async createSource(body: CreateSourceDTO): Promise<any> {
     try {
-      let {
-        name, type, user_id
-      } = body;
+      let { name, type, user_id } = body;
 
       if (type == 1) {
         const data = await this.sourceRepository.find({

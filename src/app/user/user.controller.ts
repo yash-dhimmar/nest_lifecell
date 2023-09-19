@@ -1,32 +1,107 @@
-import { Controller, Get, Req, Res } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+  Res,
+  Response,
+} from "@nestjs/common";
 import { UserService } from "./user.service";
 import { ResponseService } from "src/common/response.service";
-import { ApiQuery, ApiTags } from "@nestjs/swagger";
-import { ApiAuthHeaders, ApiCommonResponses, ApiOperationWithSwaggerSummary } from "src/common/swagger.decorator";
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from "@nestjs/swagger";
+import { CreateUserDTO } from "./dto/create-user.dto";
+import { UpdateUserDTO } from "./dto/update-user.dto";
+import { LoginUserDTO } from "./dto/login-user.dto";
 
 @Controller("/users")
-@ApiTags("users")
+@ApiTags("Users")
 export class UserController {
   constructor(
-    private readonly appService: UserService,
+    private readonly userService: UserService,
     private readonly responseService: ResponseService
-  ) { }
+  ) {}
 
-  @Get()
-  @ApiCommonResponses()
-  @ApiOperationWithSwaggerSummary("Get user detail by id")
-  @ApiAuthHeaders()
-  @ApiQuery({ name: "name", description: "Name", type: "string" })
-  async user(@Req() req, @Res() res: Response) {
+  @Post("createUser")
+  @ApiBody({ type: CreateUserDTO })
+  @ApiOperation({ summary: "create User detail" })
+  async createUser(
+    @Req() req,
+    @Res() res: Response,
+    @Body() body: CreateUserDTO
+  ) {
     try {
-      const data = await this.appService.user(req.query.name);
-      this.responseService.success(res, "SUCCESS", data);
+      const data = await this.userService.createUser(body);
+      return this.responseService.success(res, "USER_CREATE", data);
     } catch (error) {
-      if (error.status) {
-        this.responseService.error(req, res, error.message, error.status);
-      } else {
-        this.responseService.error(req, res, error.message);
-      }
+      return this.responseService.error(req, res, error.message);
+    }
+  }
+
+  @Patch("updateUserDetail/:id")
+  @ApiBody({ type: UpdateUserDTO })
+  @ApiParam({ name: "id", description: "user_id", type: "number" })
+  @ApiOperation({ summary: "Update User detail" })
+  async updateUserDetail(
+    @Req() req,
+    @Res() res: Response,
+    @Body() body: UpdateUserDTO,
+    @Param("id") id: number
+  ) {
+    try {
+      const data = await this.userService.updateUserDetail(id, body);
+      return this.responseService.success(res, "USER_UPDATE", data);
+    } catch (error) {
+      return this.responseService.error(req, res, error.message);
+    }
+  }
+
+  @Get("userList")
+  @ApiOperation({ summary: "User list of data" })
+  async userList(@Req() req, @Res() res: Response) {
+    try {
+      const data = await this.userService.userList();
+      return this.responseService.success(res, "USER_LIST", data);
+    } catch (error) {
+      return this.responseService.error(req, res, error.message);
+    }
+  }
+
+  @Get("/userGetById/:id")
+  @ApiParam({ name: "id", description: "user_id", type: "number" })
+  @ApiOperation({ summary: "Get User detail by userId" })
+  async UserGetById(@Req() req, @Res() res: Response, @Param("id") id: number) {
+    try {
+      const data = await this.userService.UserGetById(id);
+      return this.responseService.success(res, "USER_GET_BY_ID", data);
+    } catch (error) {
+      this.responseService.error(req, res, error.message);
+    }
+  }
+
+  @Delete("/deleteUser/:id")
+  @ApiParam({ name: "id", description: "user_id", type: "number" })
+  @ApiOperation({ summary: "Delete User detail" })
+  async deleteUser(@Req() req, @Res() res: Response, @Param("id") id: number) {
+    try {
+      const data = await this.userService.deleteUser(id);
+      return this.responseService.success(res, "USER_DELETE", data);
+    } catch (error) {
+      this.responseService.error(req, res, error.message);
+    }
+  }
+
+  @Post("/login")
+  @ApiOperation({ summary: "user login api" })
+  async login(@Req() req, @Res() res: Response, @Body() body: LoginUserDTO) {
+    try {
+      const data = await this.userService.login(body);
+      return this.responseService.success(res, "USER_LOGIN", data);
+    } catch (error) {
+      this.responseService.error(req, res, error.message);
     }
   }
 }

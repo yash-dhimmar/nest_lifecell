@@ -21,9 +21,7 @@ export class AdminService {
   ) { }
   async login(body: LoginDTO) {
     try {
-      let {
-        email, password
-      } = body;
+      let { email, password } = body;
       password = md5(password);
 
       const adminDetails = await this.userRepository.findOne({
@@ -32,7 +30,7 @@ export class AdminService {
       });
       if (!adminDetails) throw new UnauthorizedException("INVALID_EMAIL");
 
-      console.log(adminDetails)
+      console.log(adminDetails);
       if (adminDetails.password != password)
         throw new UnauthorizedException("INVALID_PASSWORD");
 
@@ -58,7 +56,8 @@ export class AdminService {
         await this.tokenRepository.save({
           user: { id: adminDetails.id },
           user_id: adminDetails.id,
-          auth_token, refresh_token
+          auth_token,
+          refresh_token,
         });
       }
 
@@ -88,7 +87,10 @@ export class AdminService {
         { secret: "secretKey", expiresIn: process.env.JWT_EXPIRE_TIME }
       );
 
-      await this.tokenRepository.update({ user: { id: body.user_id } }, { auth_token: token });
+      await this.tokenRepository.update(
+        { user: { id: body.user_id } },
+        { auth_token: token }
+      );
 
       return { token: token };
     } catch (error) {
@@ -104,13 +106,16 @@ export class AdminService {
 
       const adminDetails = await this.userRepository.findOne({
         where: { email: email },
-        select: { id: true, email: true, password: true }
+        select: { id: true, email: true, password: true },
       });
       if (!adminDetails) throw new UnauthorizedException("INVALID_EMAIL");
 
       const otp = await this.commonService.generateOtp(4);
 
-      const userDetail = await this.userRepository.update(adminDetails.id, { otp: otp, otp_verify: false });
+      const userDetail = await this.userRepository.update(adminDetails.id, {
+        otp: otp,
+        otp_verify: false,
+      });
       console.log(userDetail);
       const paylaod = {
         OTP: otp
@@ -139,9 +144,7 @@ export class AdminService {
 
   async resend_otp(body) {
     try {
-      let {
-        user_id,
-      } = body;
+      let { user_id } = body;
 
       const userDetail = await this.userRepository.findOne({
         where: { id: user_id },
@@ -155,7 +158,10 @@ export class AdminService {
       if (userDetail)
         await this.emailService.sendMail(userDetail.email, paylaod);
 
-      await this.userRepository.update(user_id, { otp: otp, otp_verify: false })
+      await this.userRepository.update(user_id, {
+        otp: otp,
+        otp_verify: false,
+      });
       return { otp };
     } catch (error) {
       console.log(error)
@@ -165,10 +171,7 @@ export class AdminService {
 
   async otp_verify(body: VerifyOtpDTO) {
     try {
-      let {
-        user_id,
-        otp
-      } = body;
+      let { user_id, otp } = body;
 
       const userDetail = await this.userRepository.findOne({
         where: { id: user_id, otp: otp },
@@ -192,10 +195,7 @@ export class AdminService {
 
   async reset_password(body: ResetPasswordDTO) {
     try {
-      let {
-        password,
-        user_id
-      } = body;
+      let { password, user_id } = body;
 
       password = md5(password);
       const userDetail = await this.userRepository.findOne({

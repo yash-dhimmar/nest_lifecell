@@ -5,14 +5,20 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { JwtService } from "@nestjs/jwt";
 import * as dotenv from "dotenv";
 import { ResponseService } from "src/common/response.service";
-import { multerConfig } from "src/config/multer.config";
-import { MulterModule } from "@nestjs/platform-express";
+import { User } from "src/entities/user.entity";
+import { Zone } from "src/entities/zone.entity";
+import { Center } from "src/entities/center.entity";
+import { Zip } from "src/entities/zip.entity";
+import { Role } from "src/entities/role.entity";
+import { UserToken } from "src/entities";
 dotenv.config();
 
 @Module({
-  imports: [TypeOrmModule.forFeature([]), MulterModule.register(multerConfig)],
+  imports: [
+    TypeOrmModule.forFeature([User, Zone, Center, Zip, Role, UserToken]),
+  ],
   controllers: [UserController],
   providers: [UserService, JwtService, ResponseService],
   exports: [TypeOrmModule],
 })
-export class AuthenticationModule { }
+export class AuthenticationModule {}

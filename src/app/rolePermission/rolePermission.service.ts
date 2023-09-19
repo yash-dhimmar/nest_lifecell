@@ -97,9 +97,8 @@ export class RolePermissionService {
 
   async getById(query): Promise<any> {
     try {
-      let {
-        id, type, user_id
-      } = query, data;
+      let { id, type, user_id } = query,
+        data;
       if (type == 1) {
         data = await this.roleRepository.find({
           where: { id: id },
@@ -133,7 +132,9 @@ export class RolePermissionService {
         }
         await this.roleRepository.delete({ id });
       } else {
-        const checkId = await this.permissionRepository.find({ where: { id: id } });
+        const checkId = await this.permissionRepository.find({
+          where: { id: id },
+        });
         if (!checkId.length) {
           throw new NotFoundException("ID_NOT_FOUND");
         }
@@ -147,9 +148,8 @@ export class RolePermissionService {
 
   async addPermission(body): Promise<any> {
     try {
-      let {
-        role_id, permission_ids, user_id
-      } = body, data = [];
+      let { role_id, permission_ids, user_id } = body,
+        data = [];
       const roleDetail = await this.urpRepository.find({
         where: {
           roleDetail: { id: role_id }

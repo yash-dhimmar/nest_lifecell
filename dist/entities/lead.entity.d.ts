@@ -1,0 +1,34 @@
+import { Hospital } from "./hospital.entity";
+import { Source } from "./source.entity";
+import { Medium } from "./medium.entity";
+import { Vendor } from "./vendor.entity";
+import { Appointment } from "./appointment.entity";
+import { DropReason } from "./dropReason.entity";
+import { EmailHistory } from "./emailHistory.entity";
+import { User } from "./user.entity";
+export declare class Lead {
+    id: number;
+    cust_name: string;
+    cust_mobile: string;
+    cust_email: string;
+    cust_state: string;
+    cust_city: string;
+    zip_code: string;
+    cust_street: string;
+    edd: Date;
+    delivery_state: string;
+    delivery_city: string;
+    lead_type: number;
+    hospital_id: Hospital;
+    vendor_id: Vendor;
+    source: Source;
+    medium: Medium;
+    drop_reason: DropReason;
+    status: number;
+    note: string;
+    created_by: User;
+    created_at: Date;
+    updated_at: Date;
+    leadDetails: Appointment[];
+    leadHistory: EmailHistory[];
+}
